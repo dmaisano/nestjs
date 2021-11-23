@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloServerPluginLandingPageLocalDefault as ApolloSandbox } from 'apollo-server-core';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -13,6 +14,13 @@ import { PetsModule } from './pets/pets.module';
       playground: false,
       plugins: [ApolloSandbox()],
       autoSchemaFile: join(process.cwd(), `src/schema.gql`),
+    }),
+    TypeOrmModule.forRoot({
+      type: `sqlite`,
+      database: join(__dirname, `../data.db`),
+      entities: [`dist/**/*.entity{.ts,.js}`],
+      synchronize: true,
+      logging: true,
     }),
     PetsModule,
   ],

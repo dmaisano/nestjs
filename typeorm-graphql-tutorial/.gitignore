@@ -38,4 +38,4 @@ lerna-debug.log*
 .env
 .env.*
 
-data/*.db
+data.db
